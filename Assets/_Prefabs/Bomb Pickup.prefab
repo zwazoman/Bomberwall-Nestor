@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1587239151831949400}
   - component: {fileID: 3349736684526438816}
   - component: {fileID: 2604721067842908096}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Bomb Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 6754216818984903303}
   - component: {fileID: 2332458466016250815}
   - component: {fileID: 8294233423691373028}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 3143926607194373956}
   - component: {fileID: 3141620750105743577}
   - component: {fileID: 9027815300452019421}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

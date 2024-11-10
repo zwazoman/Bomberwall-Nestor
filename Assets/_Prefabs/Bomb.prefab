@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8356637609083259930}
   - component: {fileID: 63934201053292376}
+  - component: {fileID: -4860589118539111092}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -85,6 +86,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4860589118539111092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916571384304256651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5507a85752dcc8b4fa127dc850a36a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1757532590480785054
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +110,7 @@ GameObject:
   - component: {fileID: 8828580876553411016}
   - component: {fileID: 4729260977639192087}
   - component: {fileID: 4594807952718208212}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +211,7 @@ GameObject:
   - component: {fileID: 4777914733042645635}
   - component: {fileID: 1213554194553458894}
   - component: {fileID: 896805861509391234}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

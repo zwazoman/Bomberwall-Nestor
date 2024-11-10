@@ -26,7 +26,8 @@ public class God : MonoBehaviour
 
     [SerializeField] int _maxBombPickups;
 
-    List<GameObject> _ennemyBombPickups = new List<GameObject>();
+    public List<GameObject> EnnemyBombPickups = new List<GameObject>();
+    public List<GameObject> PlayerBombPickups = new List<GameObject>();
 
     private void Awake()
     {
@@ -40,7 +41,7 @@ public class God : MonoBehaviour
             //summon pour le joueur
             SummonBombPickup(new Vector2(UnityEngine.Random.Range(-16, -8), UnityEngine.Random.Range(-8, 9)));
             //summon pour le bot
-            _ennemyBombPickups.Add(SummonBombPickup(new Vector2(UnityEngine.Random.Range(9, 17), UnityEngine.Random.Range(9, -8))));
+            EnnemyBombPickups.Add(SummonBombPickup(new Vector2(UnityEngine.Random.Range(9, 17), UnityEngine.Random.Range(9, -8))));
         }
         SummonEnnemyBomb?.Invoke();
     }

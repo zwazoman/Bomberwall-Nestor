@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float _explosionCountDown;
+
+    private void OnEnable()
     {
-        
+        StartCoroutine(CountDown());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator CountDown()
     {
-        
+        yield return new WaitForSeconds(_explosionCountDown);
     }
 }

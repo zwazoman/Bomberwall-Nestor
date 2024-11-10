@@ -6,7 +6,8 @@ using UnityEngine;
 public enum Pools
 {
     BombPickup,
-    Bomb
+    Bomb,
+    CrossExplosion
 }
 
 public class PoolManager : MonoBehaviour
