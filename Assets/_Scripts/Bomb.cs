@@ -14,5 +14,6 @@ public class Bomb : MonoBehaviour
     IEnumerator CountDown()
     {
         yield return new WaitForSeconds(_explosionCountDown);
+        //God.Instance.SummonBombPickup();
     }
 }

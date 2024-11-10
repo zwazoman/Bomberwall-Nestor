@@ -39,7 +39,7 @@ public class God : MonoBehaviour
         for(int i =0;  i < _maxBombPickups; i++)
         {
             //summon pour le joueur
-            SummonBombPickup(new Vector2(UnityEngine.Random.Range(-16, -8), UnityEngine.Random.Range(-8, 9)));
+            PlayerBombPickups.Add(SummonBombPickup(new Vector2(UnityEngine.Random.Range(-16, -8), UnityEngine.Random.Range(-8, 9))));
             //summon pour le bot
             EnnemyBombPickups.Add(SummonBombPickup(new Vector2(UnityEngine.Random.Range(9, 17), UnityEngine.Random.Range(9, -8))));
         }
