@@ -8,9 +8,14 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float _moveSpeed = 10;
     [SerializeField] LayerMask _mask;
 
-    [SerializeField] PlayerInputs _inputs;
+    PlayerInputs _inputs;
 
     Task _currentTask = null;
+
+    private void Awake()
+    {
+        TryGetComponent<PlayerInputs>(out _inputs);
+    }
 
     private void Start()
     {
