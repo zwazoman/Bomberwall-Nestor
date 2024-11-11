@@ -6,6 +6,8 @@ public class Bomb : MonoBehaviour
 {
     [SerializeField] float _explosionCountDown;
 
+    [HideInInspector] public GameObject Pickup;
+
     private void OnEnable()
     {
         StartCoroutine(CountDown());
@@ -14,6 +16,8 @@ public class Bomb : MonoBehaviour
     IEnumerator CountDown()
     {
         yield return new WaitForSeconds(_explosionCountDown);
-        //God.Instance.SummonBombPickup();
+        PoolManager.Instance.AccessPool(Pools.Bomb).ReturnToPool(gameObject);
+        if (God.Instance.PlayerBombPickups.Contains(Pickup)) God.Instance.SummonPlayerBombPickup(); else God.Instance.SummonBotBombPickup();
+        PoolManager.Instance.AccessPool(Pools.CrossExplosion).TakeFromPoolAtPos(transform.position);
     }
 }

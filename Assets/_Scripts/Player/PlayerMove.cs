@@ -24,7 +24,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if (_inputs.MoveDirection == Vector2.zero || Physics2D.Raycast(transform.position, _inputs.MoveDirection, 1, _mask.value)) return;
+        if (_inputs.MoveDirection == Vector2.zero || Physics2D.Raycast(transform.position, _inputs.MoveDirection, 1, _mask.value) /*|| _inputs.MoveDirection.x != 0 && _inputs.MoveDirection.y != 0*/) return;
         if (_currentTask == null || _currentTask.IsCompleted)
         {
             Vector2 targetPos = (Vector2)transform.position + _inputs.MoveDirection;

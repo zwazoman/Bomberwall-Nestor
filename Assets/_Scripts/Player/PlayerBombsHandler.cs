@@ -7,6 +7,8 @@ public class PlayerBombsHandler : MonoBehaviour
 {
     public bool HasABomb { get;private set; }
 
+    GameObject _bombPickup;
+
     PlayerInputs _playerInput;
 
     private void Awake()
@@ -22,13 +24,14 @@ public class PlayerBombsHandler : MonoBehaviour
     public void PickupBomb(GameObject bombPickup)
     {
         HasABomb = true;
-        PoolManager.Instance.AccessPool(Pools.BombPickup).AddToQueue(bombPickup);
+        _bombPickup = bombPickup;
     }
 
     void DeployBomb()
     {
         if (!HasABomb) return;
-        GameObject bomb = PoolManager.Instance.AccessPool(Pools.Bomb).TakeFromQueue();
-        bomb.transform.position = transform.position;
+        GameObject bomb = PoolManager.Instance.AccessPool(Pools.Bomb).TakeFromPoolAtPos(new Vector2(Mathf.Round(transform.position.x),Mathf.Round(transform.position.y)));
+        bomb.GetComponent<Bomb>().Pickup = _bombPickup;
+        HasABomb = false;
     }
 }

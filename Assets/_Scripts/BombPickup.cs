@@ -12,6 +12,7 @@ public class BombPickup : MonoBehaviour
         {
             print("player picked up");
             if (playerBombHandler.HasABomb) return;
+            PoolManager.Instance.AccessPool(Pools.BombPickup).ReturnToPool(gameObject);
             playerBombHandler.PickupBomb(gameObject);
         }
     }

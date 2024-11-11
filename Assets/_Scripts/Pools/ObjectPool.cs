@@ -18,7 +18,7 @@ public class ObjectPool : MonoBehaviour
             GameObject poolObject = Instantiate(_object);
             poolObject.SetActive(false);
             __poolContent.Add(poolObject);
-            AddToQueue(poolObject);
+            ReturnToPool(poolObject);
         }
     }
 
@@ -26,11 +26,12 @@ public class ObjectPool : MonoBehaviour
     /// returns an object to its pool
     /// </summary>
     /// <param name="objectToReturn"></param>
-    public void AddToQueue(GameObject objectToReturn)
+    public void ReturnToPool(GameObject objectToReturn)
     {
         if (!__poolContent.Contains(objectToReturn))
         {
             print("wrong object inserted");
+            return;
         }
         objectToReturn.SetActive(false);
         _pool.Enqueue(objectToReturn);
@@ -40,7 +41,7 @@ public class ObjectPool : MonoBehaviour
     /// returns an object removed from the pool and activated
     /// </summary>
     /// <returns></returns>
-    public GameObject TakeFromQueue()
+    public GameObject TakeFromPoolAtPos(Vector2 summonPos)
     {
         if (_pool.Count == 0)
         {
@@ -49,6 +50,7 @@ public class ObjectPool : MonoBehaviour
         }
         GameObject poolObject = _pool.Dequeue();
         poolObject.SetActive(true);
+        poolObject.transform.position = summonPos;
         return poolObject;
     }
 }
