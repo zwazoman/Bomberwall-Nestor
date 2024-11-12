@@ -10,6 +10,13 @@ public class PlayerInputs : MonoBehaviour
 
     [HideInInspector] public Vector2 MoveDirection;
 
+    BombsHandler _bombHandler;
+
+    private void Awake()
+    {
+        TryGetComponent<BombsHandler>(out _bombHandler);
+    }
+
     public void MoveInput(InputAction.CallbackContext context)
     {
         MoveDirection = context.ReadValue<Vector2>();
@@ -17,6 +24,6 @@ public class PlayerInputs : MonoBehaviour
 
     public void PlantInput(InputAction.CallbackContext context)
     {
-        if (context.started) OnPlant?.Invoke();
+        _bombHandler.DeployBomb();
     }
 }

@@ -8,7 +8,7 @@ public class BombPickup : MonoBehaviour
     {
         print("connard");
 
-        if (collision.gameObject.TryGetComponent<PlayerBombsHandler>(out PlayerBombsHandler playerBombHandler))
+        if (collision.gameObject.TryGetComponent<BombsHandler>(out BombsHandler playerBombHandler))
         {
             print("player picked up");
             if (playerBombHandler.HasABomb) return;

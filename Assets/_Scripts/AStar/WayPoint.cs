@@ -13,10 +13,10 @@ public class WayPoint : MonoBehaviour
 
     public List<WayPoint> Neighbours = new List<WayPoint>();
 
-    public WayPoint FormerPoint;
+    [HideInInspector] public WayPoint FormerPoint;
 
-    public bool IsOpen = false;
-    public bool IsClosed = false;
+    [HideInInspector] public bool IsOpen = false;
+    [HideInInspector] public bool IsClosed = false;
 
     [HideInInspector] public float h;
     [HideInInspector] public float g = 0;
@@ -66,7 +66,7 @@ public class WayPoint : MonoBehaviour
         h = Vector2.Distance(transform.position, endPoint.transform.position);
         g = g + 1;
 
-        _SR.color = Color.white;
+        _SR.color = Color.green;
     }
 
     void Close(ref List<WayPoint> openPoints)
@@ -74,7 +74,7 @@ public class WayPoint : MonoBehaviour
         IsClosed = true;
         print("close");
         if(openPoints.Contains(this)) openPoints.Remove(this);
-        _SR.color = Color.black;
+        _SR.color = Color.blue;
     }
 
     private void OnDrawGizmosSelected()
