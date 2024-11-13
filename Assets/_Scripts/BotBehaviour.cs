@@ -30,15 +30,14 @@ public class BotBehaviour : MonoBehaviour
 
     public void HandleWaiting()
     {
-        print("joue");
         if (_isWaiting)
         {
-            GetClosestBombPickup();
+            PickupClosestBombPickup();
         }
         else print("not waiting");
     }
 
-    async void GetClosestBombPickup()
+    async void PickupClosestBombPickup()
     {
         if(God.Instance.BombPickups.Count == 0)
         {
@@ -47,12 +46,8 @@ public class BotBehaviour : MonoBehaviour
             return;
         }
         _isWaiting = false;
-        List<Vector2> bombPickupPos = new List<Vector2>();
-        foreach(BombPickup BombPickup in God.Instance.BombPickups)
-        {
-            bombPickupPos.Add(BombPickup.transform.position);
-        }
-        Vector2Int closestBombPickupPos = FindClosest(bombPickupPos); //trouver le pickup de bombe le plus proche
+
+        Vector2Int closestBombPickupPos = FindClosestBombPickup();
 
         WayPoint targetPoint = GraphMaker.Instance.PointDict[closestBombPickupPos].GetComponent<WayPoint>(); // point du graph correspondant à la position du pickup le plus proche
         Vector2Int posToVectorInt = new Vector2Int((int) transform.position.x, (int) transform.position.y);
@@ -64,13 +59,20 @@ public class BotBehaviour : MonoBehaviour
 
         while (bestPath.Count > 0)
         {
+            Vector2Int searchClosest = FindClosestBombPickup();
+            if (searchClosest != closestBombPickupPos)
+            {
+                PickupClosestBombPickup();
+                return;
+            }
+
             WayPoint nextPoint = bestPath.Pop();
             //attendre la fin de la task
             _currentTask = _move.StartMoving(nextPoint.transform.position, _moveSpeed); // déplace le joueur jusqu'au pickup en passant par tous les former points du best path
             await _currentTask;
         }
         _currentTask = null;
-        if (_bombsHandler.HasABomb) ExplodeTheGreatWallBetweenAmericaAndMexicoVoteTrump(); else GetClosestBombPickup();
+        if (_bombsHandler.HasABomb) ExplodeTheGreatWallBetweenAmericaAndMexicoVoteTrump(); else PickupClosestBombPickup();
     }
 
     async void ExplodeTheGreatWallBetweenAmericaAndMexicoVoteTrump()
@@ -81,7 +83,6 @@ public class BotBehaviour : MonoBehaviour
 
         Stack<WayPoint> bestPath = _aStar.FindBestPath(currentPoint, targetPoint); // fais la tambouille et parcours le graph
 
-        int cpt = 0;
         while (bestPath.Count > 0)
         {
             WayPoint nextPoint = bestPath.Pop();
@@ -93,7 +94,7 @@ public class BotBehaviour : MonoBehaviour
 
         _bombsHandler.DeployBomb();
 
-        GetClosestBombPickup();
+        PickupClosestBombPickup();
 
     }
 
@@ -104,6 +105,18 @@ public class BotBehaviour : MonoBehaviour
     {
         print("gros shlagar");
     }
+
+    Vector2Int FindClosestBombPickup()
+    {
+        List<Vector2> bombPickupPos = new List<Vector2>();
+        foreach (BombPickup BombPickup in God.Instance.BombPickups)
+        {
+            bombPickupPos.Add(BombPickup.transform.position);
+        }
+        Vector2Int closestBombPickupPos = FindClosest(bombPickupPos); //trouver le pickup de bombe le plus proche
+        return closestBombPickupPos;
+    }
+
 
     Vector2Int FindClosest(List<Vector2> points)
     {
@@ -116,4 +129,6 @@ public class BotBehaviour : MonoBehaviour
         }
         return new Vector2Int((int)closestPoint.x, (int)closestPoint.y);
     }
+
+
 }

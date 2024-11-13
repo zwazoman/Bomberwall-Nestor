@@ -53,6 +53,12 @@ public class WayPoint : MonoBehaviour
             point.Open(this, endPoint,  ref openPoints);
         }
 
+        if(openPoints.Count == 0)
+        {
+            print("Oh cong la target est pas dans le graph cagole");
+            return;
+        }
+
         WayPoint bestPoint = null;
         foreach (WayPoint point in openPoints)
         {
