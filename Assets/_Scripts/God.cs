@@ -22,12 +22,11 @@ public class God : MonoBehaviour
         }
     }
 
-    public event Action SummonEnnemyBomb;
+    public event Action OnSummonBomb;
 
     [SerializeField] int _maxBombPickups;
 
-    public List<GameObject> BotBombPickups = new List<GameObject>();
-    public List<GameObject> PlayerBombPickups = new List<GameObject>();
+    public List<BombPickup> BombPickups = new List<BombPickup>();
 
     private void Awake()
     {
@@ -38,23 +37,16 @@ public class God : MonoBehaviour
     {
         for(int i =0;  i < _maxBombPickups; i++)
         {
-            SummonBotBombPickup();
-            SummonPlayerBombPickup();
+            SummonBombPickup();
         }
     }
 
-    public void SummonPlayerBombPickup()
+    public void SummonBombPickup()
     {
-        Vector2 spawnPos = new Vector2(UnityEngine.Random.Range(-16, -8), UnityEngine.Random.Range(-8, 9));
-        GameObject bombPickup =  PoolManager.Instance.AccessPool(Pools.BombPickup).TakeFromPoolAtPos(spawnPos);
-        PlayerBombPickups.Add(bombPickup);
-    }
-
-    public void SummonBotBombPickup()
-    {
-        SummonEnnemyBomb?.Invoke(); //update le graph du bot
-        Vector2 spawnPos = new Vector2(UnityEngine.Random.Range(9, 17), UnityEngine.Random.Range(9, -8));
+        Vector2 spawnPos = GraphMaker.Instance.ActivePoints[UnityEngine.Random.Range(0,GraphMaker.Instance.ActivePoints.Count)].transform.position;
         GameObject bombPickup = PoolManager.Instance.AccessPool(Pools.BombPickup).TakeFromPoolAtPos(spawnPos);
-        BotBombPickups.Add(bombPickup);
+        BombPickups.Add(bombPickup.GetComponent<BombPickup>());
+        OnSummonBomb?.Invoke();
+        FindObjectOfType<BotBehaviour>().HandleWaiting(); // event pété
     }
 }

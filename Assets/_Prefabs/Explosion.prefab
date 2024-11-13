@@ -99,6 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _endDelay: 1
+  _explosionDamage: 1
+  _mask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!61 &592748373612142994
 BoxCollider2D:
   m_ObjectHideFlags: 0

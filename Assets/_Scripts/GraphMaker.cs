@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class GraphMaker : MonoBehaviour
 {
-    [SerializeField] Vector2Int _startPoint;
-    [SerializeField] Vector2Int _endPoint;
+    [SerializeField] public Vector2Int StartPoint; // get set
+    [SerializeField] public Vector2Int EndPoint; // get set
 
     [SerializeField] GameObject _waypointPrefab;
     [SerializeField] LayerMask _mask;
@@ -29,26 +29,26 @@ public class GraphMaker : MonoBehaviour
         }
     }
 
+    public List<GameObject> ActivePoints = new List<GameObject>();
+
     private void Awake()
     {
         instance = this;
-    }
 
-    private void Start()
-    {
-        int ypos = _startPoint.y;
-        int xpos = _startPoint.x;
-        for(int i  = 0; i < _endPoint.y *2; i++)
+
+        int ypos = StartPoint.y;
+        int xpos = StartPoint.x;
+        for (int i = 0; i < EndPoint.y * 2; i++)
         {
-            for(int j  = 0; j < _endPoint.x *2; j++)
+            for (int j = 0; j < EndPoint.x * 2; j++)
             {
                 Vector2Int spawnPos = new Vector2Int(xpos + j, ypos + i);
                 PointDict.Add(spawnPos, Instantiate(_waypointPrefab, (Vector2)spawnPos, Quaternion.identity));
             }
         }
-        foreach( GameObject point in PointDict.Values)
+        foreach (GameObject point in PointDict.Values)
         {
-            if (Physics2D.OverlapPoint(point.transform.position,_mask.value)) point.SetActive(false);
+            if (Physics2D.OverlapPoint(point.transform.position, _mask.value)) point.SetActive(false); else ActivePoints.Add(point);
             if (point.TryGetComponent<WayPoint>(out WayPoint wayPoint))
             {
                 Vector2Int actualPos = new Vector2Int((int)point.transform.position.x, (int)point.transform.position.y);
@@ -57,10 +57,10 @@ public class GraphMaker : MonoBehaviour
                 WayPoint leftPoint = null;
                 WayPoint BottomPoint = null;
                 WayPoint TopPoint = null;
-                if (actualPos.x != _endPoint.x) rightPoint = PointDict[new Vector2Int(actualPos.x + 1, actualPos.y)].GetComponent<WayPoint>();
-                if(actualPos.x != _startPoint.x) leftPoint = PointDict[new Vector2Int(actualPos.x - 1, actualPos.y)].GetComponent<WayPoint>();
-                if (actualPos.y != _startPoint.y) BottomPoint = PointDict[new Vector2Int(actualPos.x, actualPos.y - 1)].GetComponent<WayPoint>();
-                if (actualPos.y != _endPoint.y) TopPoint = PointDict[new Vector2Int(actualPos.x, actualPos.y + 1)].GetComponent<WayPoint>();
+                if (actualPos.x != EndPoint.x) rightPoint = PointDict[new Vector2Int(actualPos.x + 1, actualPos.y)].GetComponent<WayPoint>();
+                if (actualPos.x != StartPoint.x) leftPoint = PointDict[new Vector2Int(actualPos.x - 1, actualPos.y)].GetComponent<WayPoint>();
+                if (actualPos.y != StartPoint.y) BottomPoint = PointDict[new Vector2Int(actualPos.x, actualPos.y - 1)].GetComponent<WayPoint>();
+                if (actualPos.y != EndPoint.y) TopPoint = PointDict[new Vector2Int(actualPos.x, actualPos.y + 1)].GetComponent<WayPoint>();
 
                 if (!wayPoint.Neighbours.Contains(rightPoint)) wayPoint.Neighbours.Add(rightPoint);
                 if (!wayPoint.Neighbours.Contains(leftPoint)) wayPoint.Neighbours.Add(leftPoint);
@@ -69,6 +69,13 @@ public class GraphMaker : MonoBehaviour
             }
 
         }
+    }
+
+    public void ActivatePoint(GameObject pointObject)
+    {
+        if (ActivePoints.Contains(pointObject)) return;
+        ActivePoints.Add(pointObject);
+        pointObject.SetActive(true);
     }
 }
  

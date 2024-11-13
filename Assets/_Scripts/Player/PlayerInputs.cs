@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputs : MonoBehaviour
 {
-    public event Action OnPlant;
-
     [HideInInspector] public Vector2 MoveDirection;
 
     BombsHandler _bombHandler;

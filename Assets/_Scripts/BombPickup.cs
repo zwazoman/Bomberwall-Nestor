@@ -6,13 +6,12 @@ public class BombPickup : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("connard");
 
         if (collision.gameObject.TryGetComponent<BombsHandler>(out BombsHandler playerBombHandler))
         {
-            print("player picked up");
             if (playerBombHandler.HasABomb) return;
             PoolManager.Instance.AccessPool(Pools.BombPickup).ReturnToPool(gameObject);
+            God.Instance.BombPickups.Remove(this);
             playerBombHandler.PickupBomb(gameObject);
         }
     }

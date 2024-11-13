@@ -22,8 +22,9 @@ public class BreakableWall : MonoBehaviour
 
     public void BreakWall()
     {
-        GraphMaker.Instance.PointDict[new Vector2Int((int) transform.position.x, (int) transform.position.y)].SetActive(true);
+        GraphMaker.Instance.ActivatePoint(GraphMaker.Instance.PointDict[new Vector2Int((int)transform.position.x, (int)transform.position.y)]);
         Destroy(gameObject);
+        Time.timeScale = 0;
         //mettre a jour le graph
     }
 }

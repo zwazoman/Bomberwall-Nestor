@@ -10,6 +10,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class WayPoint : MonoBehaviour
 {
     SpriteRenderer _SR;
+    Color _color;
 
     public List<WayPoint> Neighbours = new List<WayPoint>();
 
@@ -18,41 +19,48 @@ public class WayPoint : MonoBehaviour
     [HideInInspector] public bool IsOpen = false;
     [HideInInspector] public bool IsClosed = false;
 
-    [HideInInspector] public float h;
-    [HideInInspector] public float g = 0;
-    [HideInInspector] public float f => g + h ;
+    [HideInInspector] public float H;
+    [HideInInspector] public float G;
+    [HideInInspector] public float F => G + H ;
 
 
     private void Awake()
     {
         TryGetComponent<SpriteRenderer>(out _SR);
+        _color = _SR.color;
     }
 
-    public void TravelThrough(ref List<WayPoint> openPoints, WayPoint endPoint)
+    public void TravelThrough(ref List<WayPoint> openPoints,ref List<WayPoint> closedPoints, ref Stack<WayPoint> shorterPath, WayPoint endPoint, WayPoint startPoint)
     {
         if(this == endPoint)
         {
-            print("finito");
+            Close(ref openPoints, ref closedPoints);
+            WayPoint currentPoint = endPoint;
+            while(currentPoint != startPoint)
+            {
+                shorterPath.Push(currentPoint);
+                currentPoint = currentPoint.FormerPoint;
+            }
             return;
         }
 
-        Close(ref openPoints);
+        Close(ref openPoints, ref closedPoints);
 
         foreach(WayPoint point in Neighbours)
         {
-            if (point.IsClosed || point.IsOpen) continue;
+            if (point.IsClosed || point.IsOpen || !point.gameObject.activeSelf) continue;
 
-            point.Open(point,endPoint,  ref openPoints);
+            point.Open(this, endPoint,  ref openPoints);
         }
 
         WayPoint bestPoint = null;
         foreach (WayPoint point in openPoints)
         {
             if (bestPoint == null) bestPoint = point;
-            else if (point.f < bestPoint.f) bestPoint = point;
+            else if (point.F < bestPoint.F) bestPoint = point;
         }
 
-        bestPoint.TravelThrough(ref openPoints, endPoint);
+        bestPoint.TravelThrough(ref openPoints,ref closedPoints, ref shorterPath, endPoint, startPoint);
     }
 
     void Open(WayPoint formerPoint, WayPoint endPoint, ref List<WayPoint> openPoints)
@@ -63,18 +71,29 @@ public class WayPoint : MonoBehaviour
 
         FormerPoint = formerPoint;
 
-        h = Vector2.Distance(transform.position, endPoint.transform.position);
-        g = g + 1;
+        H = Vector2.Distance(transform.position, endPoint.transform.position);
+        G ++;
 
         _SR.color = Color.green;
     }
 
-    void Close(ref List<WayPoint> openPoints)
+    void Close(ref List<WayPoint> openPoints, ref List<WayPoint> closedPoints)
     {
         IsClosed = true;
-        print("close");
+        closedPoints.Add(this);
         if(openPoints.Contains(this)) openPoints.Remove(this);
         _SR.color = Color.blue;
+    }
+
+    public void ResetState()
+    {
+        FormerPoint = null;
+        G = 0;
+        H = 0;
+        IsClosed = false;
+        IsOpen = false;
+        _SR.color = _color;
+
     }
 
     private void OnDrawGizmosSelected()

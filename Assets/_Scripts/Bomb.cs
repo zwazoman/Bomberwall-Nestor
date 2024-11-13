@@ -17,7 +17,8 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(_explosionCountDown);
         PoolManager.Instance.AccessPool(Pools.Bomb).ReturnToPool(gameObject);
-        if (God.Instance.PlayerBombPickups.Contains(Pickup)) God.Instance.SummonPlayerBombPickup(); else God.Instance.SummonBotBombPickup();
+        BombPickup bombPickup = Pickup.GetComponent<BombPickup>();
+        God.Instance.SummonBombPickup();
         PoolManager.Instance.AccessPool(Pools.CrossExplosion).TakeFromPoolAtPos(transform.position);
     }
 }
