@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class GraphMaker : MonoBehaviour
 {
-    [SerializeField] public Vector2Int StartPoint; // get set
-    [SerializeField] public Vector2Int EndPoint; // get set
+    [SerializeField] public Vector2Int StartPos; // get set
+    [SerializeField] public Vector2Int EndPos; // get set
 
     [SerializeField] GameObject _waypointPrefab;
     [SerializeField] LayerMask _mask;
@@ -36,11 +36,11 @@ public class GraphMaker : MonoBehaviour
         instance = this;
 
 
-        int ypos = StartPoint.y;
-        int xpos = StartPoint.x;
-        for (int i = 0; i < EndPoint.y * 2; i++)
+        int ypos = StartPos.y;
+        int xpos = StartPos.x;
+        for (int i = 0; i < EndPos.y * 2; i++)
         {
-            for (int j = 0; j < EndPoint.x * 2; j++)
+            for (int j = 0; j < EndPos.x * 2; j++)
             {
                 Vector2Int spawnPos = new Vector2Int(xpos + j, ypos + i);
                 PointDict.Add(spawnPos, Instantiate(_waypointPrefab, (Vector2)spawnPos, Quaternion.identity));
@@ -57,10 +57,10 @@ public class GraphMaker : MonoBehaviour
                 WayPoint leftPoint = null;
                 WayPoint BottomPoint = null;
                 WayPoint TopPoint = null;
-                if (actualPos.x != EndPoint.x) rightPoint = PointDict[new Vector2Int(actualPos.x + 1, actualPos.y)].GetComponent<WayPoint>();
-                if (actualPos.x != StartPoint.x) leftPoint = PointDict[new Vector2Int(actualPos.x - 1, actualPos.y)].GetComponent<WayPoint>();
-                if (actualPos.y != StartPoint.y) BottomPoint = PointDict[new Vector2Int(actualPos.x, actualPos.y - 1)].GetComponent<WayPoint>();
-                if (actualPos.y != EndPoint.y) TopPoint = PointDict[new Vector2Int(actualPos.x, actualPos.y + 1)].GetComponent<WayPoint>();
+                if (actualPos.x != EndPos.x) rightPoint = PointDict[new Vector2Int(actualPos.x + 1, actualPos.y)].GetComponent<WayPoint>();
+                if (actualPos.x != StartPos.x) leftPoint = PointDict[new Vector2Int(actualPos.x - 1, actualPos.y)].GetComponent<WayPoint>();
+                if (actualPos.y != StartPos.y) BottomPoint = PointDict[new Vector2Int(actualPos.x, actualPos.y - 1)].GetComponent<WayPoint>();
+                if (actualPos.y != EndPos.y) TopPoint = PointDict[new Vector2Int(actualPos.x, actualPos.y + 1)].GetComponent<WayPoint>();
 
                 if (!wayPoint.Neighbours.Contains(rightPoint)) wayPoint.Neighbours.Add(rightPoint);
                 if (!wayPoint.Neighbours.Contains(leftPoint)) wayPoint.Neighbours.Add(leftPoint);

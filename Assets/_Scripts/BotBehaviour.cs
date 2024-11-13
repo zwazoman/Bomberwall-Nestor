@@ -60,7 +60,7 @@ public class BotBehaviour : MonoBehaviour
         while (bestPath.Count > 0)
         {
             Vector2Int searchClosest = FindClosestBombPickup();
-            if (searchClosest != closestBombPickupPos)
+            if (searchClosest != closestBombPickupPos && !_bombsHandler.HasABomb)
             {
                 PickupClosestBombPickup();
                 return;

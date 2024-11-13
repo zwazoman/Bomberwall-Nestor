@@ -1839,8 +1839,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f04a9617876a9428f768d1e46fa4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPoint: {x: -17, y: -9}
-  EndPoint: {x: 18, y: 10}
+  StartPos: {x: -17, y: -9}
+  EndPos: {x: 18, y: 10}
   _waypointPrefab: {fileID: 6568912019108539627, guid: dbaf27533efae7549a196e37f275917a, type: 3}
   _mask:
     serializedVersion: 2
