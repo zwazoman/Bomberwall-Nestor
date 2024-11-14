@@ -98,7 +98,7 @@ public class WayPoint : MonoBehaviour
         H = 0;
         IsClosed = false;
         IsOpen = false;
-        //_SR.color = _color;
+        _SR.color = _color;
     }
 
     private void OnDrawGizmosSelected()
