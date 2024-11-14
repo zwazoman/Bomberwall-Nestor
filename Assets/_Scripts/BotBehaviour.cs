@@ -34,14 +34,12 @@ public class BotBehaviour : MonoBehaviour
         {
             PickupClosestBombPickup();
         }
-        else print("not waiting");
     }
 
     async void PickupClosestBombPickup()
     {
         if(God.Instance.BombPickups.Count == 0)
         {
-            print("wait");
             _isWaiting = true;
             return;
         }
@@ -77,7 +75,7 @@ public class BotBehaviour : MonoBehaviour
 
     async void ExplodeTheGreatWallBetweenAmericaAndMexicoVoteTrump()
     {
-        WayPoint targetPoint = GraphMaker.Instance.PointDict[new Vector2Int(16, 0)].GetComponent<WayPoint>();
+        WayPoint targetPoint = GraphMaker.Instance.PointDict[new Vector2Int(16, -8)].GetComponent<WayPoint>();
         Vector2Int posToVectorInt = new Vector2Int((int)transform.position.x, (int)transform.position.y);
         WayPoint currentPoint = GraphMaker.Instance.PointDict[posToVectorInt].GetComponent<WayPoint>(); // point du graph correspondant à la position du gameObject
 
