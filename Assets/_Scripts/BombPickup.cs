@@ -9,7 +9,6 @@ public class BombPickup : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent<BombsHandler>(out BombsHandler playerBombHandler))
         {
-            if (playerBombHandler.HasABomb) return;
             PoolManager.Instance.AccessPool(Pools.BombPickup).ReturnToPool(gameObject);
             God.Instance.BombPickups.Remove(this);
             playerBombHandler.PickupBomb(gameObject);

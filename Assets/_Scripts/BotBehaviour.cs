@@ -6,6 +6,7 @@ using UnityEngine;
 public class BotBehaviour : MonoBehaviour
 {
     [SerializeField] float _moveSpeed = 6;
+    [SerializeField] Vector2Int specificBombingSpot;
 
     Move _move;
     BombsHandler _bombsHandler;
@@ -23,7 +24,6 @@ public class BotBehaviour : MonoBehaviour
 
     private void Start()
     {
-        print("joue");
         God.Instance.OnSummonBomb += HandleWaiting;
         transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }
@@ -70,12 +70,12 @@ public class BotBehaviour : MonoBehaviour
             await _currentTask;
         }
         _currentTask = null;
-        if (_bombsHandler.HasABomb) ExplodeTheGreatWallBetweenAmericaAndMexicoVoteTrump(); else PickupClosestBombPickup();
+        if (_bombsHandler.HasABomb) ExplodeSpecificSpot(specificBombingSpot); else PickupClosestBombPickup();
     }
 
-    async void ExplodeTheGreatWallBetweenAmericaAndMexicoVoteTrump()
+    async void ExplodeSpecificSpot(Vector2Int pos)
     {
-        WayPoint targetPoint = GraphMaker.Instance.PointDict[new Vector2Int(16, -8)].GetComponent<WayPoint>();
+        WayPoint targetPoint = GraphMaker.Instance.PointDict[pos].GetComponent<WayPoint>();
         Vector2Int posToVectorInt = new Vector2Int((int)transform.position.x, (int)transform.position.y);
         WayPoint currentPoint = GraphMaker.Instance.PointDict[posToVectorInt].GetComponent<WayPoint>(); // point du graph correspondant à la position du gameObject
 
@@ -93,7 +93,6 @@ public class BotBehaviour : MonoBehaviour
         _bombsHandler.DeployBomb();
 
         PickupClosestBombPickup();
-
     }
 
     /// <summary>

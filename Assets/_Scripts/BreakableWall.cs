@@ -8,28 +8,22 @@ public class BreakableWall : MonoBehaviour
 {
     public UnityEvent OnWallBroken;
 
-    [SerializeField] int _maxHP;
-
-    float _currentHP;
+    Damage _dmg;
 
     private void Awake()
     {
-        _currentHP = _maxHP;
+        TryGetComponent<Damage>(out _dmg);
     }
 
-    public void DamageWall(int damage)
+    private void Start()
     {
-        print("damageWall");
-        _currentHP -= damage;
-        if (_currentHP <= 0) BreakWall();
+        _dmg.OnDamage += BreakWall;
     }
 
-    public void BreakWall()
+    void BreakWall()
     {
         GraphMaker.Instance.ActivatePoint(GraphMaker.Instance.PointDict[new Vector2Int((int)transform.position.x, (int)transform.position.y)]);
-        OnWallBroken.Invoke();
+        //OnWallBroken.Invoke();
         Destroy(gameObject);
-        Time.timeScale = 0;
-        //mettre a jour le graph
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2613392222733705404}
   - component: {fileID: 5335225601077092095}
   - component: {fileID: 2710191968469920859}
+  - component: {fileID: 8722594025521728739}
   - component: {fileID: 492940499690700019}
   m_Layer: 6
   m_Name: Breakable
@@ -159,6 +160,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8722594025521728739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125883261017698218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9255dc5c1946dcf44a061832336fbc5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &492940499690700019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,4 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cea9f5655b469e4da29ca64f3916514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHP: 1
+  OnWallBroken:
+    m_PersistentCalls:
+      m_Calls: []

@@ -9,13 +9,15 @@ public class BombsHandler : MonoBehaviour
     public event Action OnBombPickup;
     public event Action OnBombDeployed;
 
-    public bool HasABomb { get;private set; }
+    public bool HasABomb => BombsPossessed > 0;
+
+    public int BombsPossessed = 0;
 
     GameObject _bombPickup;
 
     public void PickupBomb(GameObject bombPickup)
     {
-        HasABomb = true;
+        BombsPossessed++;
         OnBombPickup?.Invoke();
         _bombPickup = bombPickup;
     }
@@ -26,6 +28,6 @@ public class BombsHandler : MonoBehaviour
         OnBombDeployed?.Invoke();
         GameObject bomb = PoolManager.Instance.AccessPool(Pools.Bomb).TakeFromPoolAtPos(new Vector2(Mathf.Round(transform.position.x),Mathf.Round(transform.position.y)));
         bomb.GetComponent<Bomb>().Pickup = _bombPickup;
-        HasABomb = false;
+        BombsPossessed--;
     }
 }
