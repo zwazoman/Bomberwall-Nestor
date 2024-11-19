@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public event Action<int> OnDamageTaken;
+    public event Action<int> OnHealthLost;
 
-    [SerializeField] int _maxHealth = 3;
+    [SerializeField] public int MaxHealth ;
 
-    int _health;
+    [HideInInspector] public int CurrentHealth;
     Damage _dmg;
 
     private void Awake()
@@ -25,16 +25,16 @@ public class Health : MonoBehaviour
     void Damage(int dmg)
     {
         print("Damage");
-        _health -= dmg;
-        OnDamageTaken?.Invoke(_health);
-        if (_health <= 0)
+        CurrentHealth -= dmg;
+        OnHealthLost?.Invoke(CurrentHealth);
+        if (CurrentHealth <= 0)
         {
             GameManager.Instance.StopGame(gameObject.name);
         }
     }
 
-    void Heal(int heal)
+    public void Heal(int heal)
     {
-
+        if (CurrentHealth + heal > MaxHealth) CurrentHealth = MaxHealth; else CurrentHealth += heal;
     }
 }

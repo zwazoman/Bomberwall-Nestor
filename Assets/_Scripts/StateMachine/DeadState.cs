@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetBombState : BotStates
+public class DeadState : BotStates
 {
     public override void OnEnter()
     {

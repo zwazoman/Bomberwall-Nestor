@@ -1,18 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    public BaseState CurrentState;
+    public BotStates CurrentState;
+    //public BotStates InitialState;
 
-    public BaseState InitialState;
+    static GetBombState _getBomb = new GetBombState();
+    static EscapeBombState _escapeBomb = new EscapeBombState();
+    static ChasePlayerState _chasePlayer = new ChasePlayerState();
+    static DeadState _dead = new DeadState();
+    static WinState _win = new WinState();
 
-    public GetBombState GetBomb;
-    public EscapeBombState EscapeBomb;
-    public ChasePlayerState ChasePlayer;
+    List<BotStates> _botStates = new List<BotStates>()
+    {
+        _getBomb,
+        _escapeBomb,
+        _chasePlayer,
+        _dead,
+        _win
+    };
 
-    public void TransitionTo(BaseState state)
+    private void Start()
+    {
+        foreach (BotStates state in _botStates)
+        {
+            state.Machine = this;
+        }
+
+        //set start state
+        TransitionTo(_getBomb);
+    }
+    public void TransitionTo(BotStates state)
     {
         CurrentState = state;
         state.OnEnter();
