@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetBombState : BotStates
+public class GetBombState : AIState
 {
     public override void OnEnter()
     {
-        throw new System.NotImplementedException();
+        Machine.GetComponent<AIBehaviour>().FindClosestBombPickupPath();
     }
 
     public override void Update()
@@ -14,7 +14,7 @@ public class GetBombState : BotStates
         throw new System.NotImplementedException();
     }
 
-    public override void Exit(BotStates nextState)
+    public override void Exit(AIState nextState)
     {
         Machine.TransitionTo(nextState);
     }

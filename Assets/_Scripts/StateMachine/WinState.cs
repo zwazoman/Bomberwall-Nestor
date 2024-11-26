@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WinState : BotStates
+public class WinState : AIState
 {
     public override void OnEnter()
     {
@@ -14,7 +14,7 @@ public class WinState : BotStates
         throw new System.NotImplementedException();
     }
 
-    public override void Exit(BotStates nextState)
+    public override void Exit(AIState nextState)
     {
         Machine.TransitionTo(nextState);
     }

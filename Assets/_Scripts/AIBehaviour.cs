@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
-public class BotBehaviour : MonoBehaviour
+public class AIBehaviour : MonoBehaviour
 {
     [SerializeField] float _moveSpeed = 6;
     [SerializeField] Vector2Int specificBombingSpot;
@@ -32,20 +33,13 @@ public class BotBehaviour : MonoBehaviour
     {
         if (_isWaiting)
         {
-            PickupClosestBombPickup();
+            FindClosestBombPickupPath();
         }
     }
 
-    async void PickupClosestBombPickup()
+    public Stack<WayPoint> FindClosestBombPickupPath()
     {
-        if(God.Instance.BombPickups.Count == 0)
-        {
-            _isWaiting = true;
-            return;
-        }
-        _isWaiting = false;
-
-        Vector2Int closestBombPickupPos = FindClosestBombPickup();
+        Vector2Int closestBombPickupPos = FindClosestBombPickupPos();
 
         WayPoint targetPoint = GraphMaker.Instance.PointDict[closestBombPickupPos].GetComponent<WayPoint>(); // point du graph correspondant à la position du pickup le plus proche
         Vector2Int posToVectorInt = new Vector2Int((int) transform.position.x, (int) transform.position.y);
@@ -54,23 +48,29 @@ public class BotBehaviour : MonoBehaviour
 
         // a ranger dans une func a part ? chiant pour l'async ?
         Stack<WayPoint> bestPath = _aStar.FindBestPath(currentPoint, targetPoint); // fais la tambouille et parcours le graph
+        return bestPath;
+    }
 
-        while (bestPath.Count > 0)
+    public async void MovedTowardClosestBombPickup()
+    {
+        if (God.Instance.BombPickups.Count == 0)
         {
-            Vector2Int searchClosest = FindClosestBombPickup();
-            if (searchClosest != closestBombPickupPos && !_bombsHandler.HasABomb)
-            {
-                PickupClosestBombPickup();
-                return;
-            }
+            _isWaiting = true;
+            return;
+        }
+        _isWaiting = false;
 
-            WayPoint nextPoint = bestPath.Pop();
+        Stack<WayPoint> path = FindClosestBombPickupPath();
+        while (path.Count > 0)
+        {
+            Vector2Int searchClosest = FindClosestBombPickupPos();
+
+            WayPoint nextPoint = path.Pop();
             //attendre la fin de la task
             _currentTask = _move.StartMoving(nextPoint.transform.position, _moveSpeed); // déplace le joueur jusqu'au pickup en passant par tous les former points du best path
             await _currentTask;
         }
         _currentTask = null;
-        if (_bombsHandler.HasABomb) ExplodeSpecificSpot(specificBombingSpot); else PickupClosestBombPickup();
     }
 
     async void ExplodeSpecificSpot(Vector2Int pos)
@@ -91,8 +91,6 @@ public class BotBehaviour : MonoBehaviour
         _currentTask = null;
 
         _bombsHandler.DeployBomb();
-
-        PickupClosestBombPickup();
     }
 
     /// <summary>
@@ -103,7 +101,7 @@ public class BotBehaviour : MonoBehaviour
         print("gros shlagar");
     }
 
-    Vector2Int FindClosestBombPickup()
+    Vector2Int FindClosestBombPickupPos()
     {
         List<Vector2> bombPickupPos = new List<Vector2>();
         foreach (BombPickup BombPickup in God.Instance.BombPickups)

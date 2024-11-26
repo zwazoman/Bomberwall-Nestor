@@ -47,6 +47,6 @@ public class God : MonoBehaviour
         GameObject bombPickup = PoolManager.Instance.AccessPool(Pools.BombPickup).TakeFromPoolAtPos(spawnPos);
         BombPickups.Add(bombPickup.GetComponent<BombPickup>());
         OnSummonBomb?.Invoke();
-        FindObjectOfType<BotBehaviour>().HandleWaiting(); // event pété
+        FindObjectOfType<AIBehaviour>().HandleWaiting(); // event pété
     }
 }
