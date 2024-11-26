@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StateMachine : MonoBehaviour
 {
@@ -11,6 +12,14 @@ public class StateMachine : MonoBehaviour
     public DeadState Dead = new DeadState();
     public WinState Win = new WinState();
 
+    public AIController Controller;
+    public AISensor Sensor;
+
+    private void Awake()
+    {
+        Controller = GetComponent<AIController>();
+        Sensor = GetComponent<AISensor>();
+    }
 
     private void Start()
     {

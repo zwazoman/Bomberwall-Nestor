@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public event Action OnStep;
+
     [SerializeField] float _moveSpeed = 10;
     [SerializeField] LayerMask _mask;
 
@@ -33,6 +36,7 @@ public class PlayerMove : MonoBehaviour
             Vector2 targetPos = (Vector2)transform.position + _inputs.MoveDirection;
             targetPos = new Vector2(Mathf.Round(targetPos.x), Mathf.Round(targetPos.y));
             _currentTask = _move.StartMoving(targetPos,_moveSpeed);
+            OnStep?.Invoke();
         }
     }
 }

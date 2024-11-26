@@ -11,7 +11,7 @@ public class BombsHandler : MonoBehaviour
 
     public bool HasABomb => BombsPossessed > 0;
 
-    public int BombsPossessed = 0;
+    [HideInInspector] public int BombsPossessed = 0;
 
     GameObject _bombPickup;
 

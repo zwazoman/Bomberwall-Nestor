@@ -22,7 +22,7 @@ public abstract class AIState
 
     //outcomes
 
-
+    public abstract bool CanEnter();
     public abstract void OnEnter();
     public abstract void Update();
     public abstract void Exit(AIState nextState);

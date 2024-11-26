@@ -18,4 +18,9 @@ public class WinState : AIState
     {
         Machine.TransitionTo(nextState);
     }
+
+    public override bool CanEnter()
+    {
+        throw new System.NotImplementedException();
+    }
 }
