@@ -6,28 +6,26 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     [SerializeField] float _endDelay;
-    [SerializeField] int _explosionDamage = 1;
 
     [SerializeField] LayerMask _mask;
 
     private void OnEnable()
     {
         StartCoroutine(End());
-        //List<RaycastHit2D> hits = new List<RaycastHit2D>();
-        //hits.Add(Physics2D.Raycast(transform.position, transform.right, transform.localScale.x / 2, _mask));
-        //hits.Add(Physics2D.Raycast(transform.position, -transform.right, transform.localScale.x / 2, _mask));
-        //foreach (RaycastHit2D hit in hits)
-        //{
-        //    Damage damage;
-        //    hit.collider.gameObject.TryGetComponent<Damage>(out damage);  
-        //    damage.ApplyDamage(_explosionDamage);
-        //}
     }
 
     private void Update()
     {
         Debug.DrawRay(transform.position, transform.right * transform.localScale.x / 2, Color.red);
         Debug.DrawRay(transform.position, -transform.right * transform.localScale.x / 2, Color.red);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.TryGetComponent<BreakableWall>(out BreakableWall wall))
+        {
+            wall.DamageWall();
+        }
     }
 
     IEnumerator End()

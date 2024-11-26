@@ -101,5 +101,5 @@ MonoBehaviour:
   FormerPoint: {fileID: 0}
   IsOpen: 0
   IsClosed: 0
-  h: 0
-  g: 0
+  H: 0
+  G: 0

@@ -6,24 +6,19 @@ using UnityEngine.Events;
 
 public class BreakableWall : MonoBehaviour
 {
-    public UnityEvent OnWallBroken;
+    [SerializeField] bool _isPlayer;
 
-    Damage _dmg;
+    [SerializeField] int _hps = 3;
 
-    private void Awake()
+
+    public void DamageWall()
     {
-        TryGetComponent<Damage>(out _dmg);
-    }
-
-    private void Start()
-    {
-        _dmg.OnDamage += BreakWall;
-    }
-
-    void BreakWall()
-    {
-        GraphMaker.Instance.ActivatePoint(GraphMaker.Instance.PointDict[new Vector2Int((int)transform.position.x, (int)transform.position.y)]);
-        //OnWallBroken.Invoke();
-        Destroy(gameObject);
+        _hps--;
+        if (_hps <= 0)
+        {
+            GraphMaker.Instance.ActivatePoint(GraphMaker.Instance.PointDict[new Vector2Int((int)transform.position.x, (int)transform.position.y)]);
+            if (_isPlayer) GameManager.Instance.StopGame("The Player"); else GameManager.Instance.StopGame("The AI");
+            Destroy(gameObject);
+        }
     }
 }

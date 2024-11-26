@@ -100,7 +100,6 @@ public class BotBehaviour : MonoBehaviour
     /// </summary>
     void ExplodeClosestBreakable()
     {
-        print("gros shlagar");
     }
 
     Vector2Int FindClosestBombPickup()
