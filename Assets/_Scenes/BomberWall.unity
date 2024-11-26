@@ -3472,6 +3472,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5923344056214127648, guid: 457a0a11212e04a4aaa6746ef610c5f1, type: 3}
+      propertyPath: MaxHealth
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7899289178486605475, guid: 457a0a11212e04a4aaa6746ef610c5f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16
@@ -4049,6 +4053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ed8c47d8cf0dc4eb2579cf802c0788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Destination: {fileID: 0}
   _moveSpeed: 6
   specificBombingSpot: {x: 16, y: -8}
 --- !u!114 &8793649551305292091
