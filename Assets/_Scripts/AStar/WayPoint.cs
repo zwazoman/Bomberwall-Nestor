@@ -1,11 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Playables;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class WayPoint : MonoBehaviour
 {
